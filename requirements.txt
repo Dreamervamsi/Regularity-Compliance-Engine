@@ -8,3 +8,4 @@ langchain-huggingface
 langchain-core
 python-dotenv
 huggingface-hub
+pyahocorasick
