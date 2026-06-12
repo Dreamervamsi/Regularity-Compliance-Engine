@@ -1,0 +1,10 @@
+langchain-text-splitters
+pypdf                    
+argparse                 
+chromadb                 
+rank-bm25                
+fastembed
+langchain-huggingface
+langchain-core
+python-dotenv
+huggingface-hub
