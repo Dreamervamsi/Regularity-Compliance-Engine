@@ -4,12 +4,13 @@ from rag_pipeline.dual_search.dense_search.src.index import vector_store
 from ingest_docs.embedding import dense_embed
 from rag_pipeline.dual_search.sparse_search.src.sparse_index import Tokenize
 import config
+import io
 
-def ingest(file_paths:list,reingest:bool=True):
+def ingest(file_stream:list[io.ByteIO],reingest:bool=True):
     try:
         print("File loading.Extracting text..")
         # retriving text from document
-        loader_res = file_loader(file_paths)
+        loader_res = file_loader(file_stream)
         print("Chunking the file..")
         # chunking
         data_chunks = chunk_text(loader_res)
