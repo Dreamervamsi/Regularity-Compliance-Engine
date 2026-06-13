@@ -10,9 +10,9 @@ def preprocess_query(query:str):
     res = obj.check_query_in_keyword_blocklist(normalised_query)
 
     if(res.detected):
-        print(f'{res.message}')
+        print(f'{res['message']}')
         return {
-            'message':res.message,
-            'word':res.word,
-            'category':res.category
+            'message':res['message'],
+            'word':res['word'],
+            'category':res['category']
         }

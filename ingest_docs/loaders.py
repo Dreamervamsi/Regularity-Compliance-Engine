@@ -14,7 +14,7 @@ def file_loader(file_info:list)->list:
             if text:
                 extracted_text+=text + "\n"
 
-        pattern = r'(^(?:Section|Article|Part|Chapter)\s+[\dIVXLC]+(?:\.\d+)*[.:]?\s*.+$)'
+        pattern = r'(?m)^((?:Section|Article|Part|Chapter)\s+[\dIVXLC]+(?:\.\d+)*[.:]?\s*.+)$'
         
         parts = re.split(pattern,extracted_text, flags=re.MULTILINE)
 
