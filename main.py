@@ -1,6 +1,7 @@
 from fastapi import FastAPI, File, UploadFile
 import uvicorn
 from ingest_docs.ingest_manager import ingest
+from rag_pipeline.query_preprocess.preprocess import preprocess_query
 import io
 
 app = FastAPI()
@@ -27,7 +28,6 @@ def ingest(files:list[UploadFile] = File(...)):
 
 @app.post('/query')
 def query(query:str):
-    
     # query preprocessing
     preprocess_query(query)
 

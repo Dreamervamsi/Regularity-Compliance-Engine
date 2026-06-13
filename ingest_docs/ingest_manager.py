@@ -1,6 +1,6 @@
 from ingest_docs.loaders import file_loader
 from ingest_docs.chunking import chunk_text
-from rag_pipeline.dual_search.dense_search.src.index import vector_store
+from rag_pipeline.dual_search.dense_search.src.index_dense import vector_store
 from ingest_docs.embedding import dense_embed
 from rag_pipeline.dual_search.sparse_search.src.sparse_index import Tokenize
 import config

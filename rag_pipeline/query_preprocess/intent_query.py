@@ -1,4 +1,4 @@
-from rag_pipeline.dual_search.dense_search.src.index import get_client,get_collection
+from rag_pipeline.dual_search.dense_search.src.index_dense import get_client,get_collection
 import ahocorasick
 import re
 import config
