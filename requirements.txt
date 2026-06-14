@@ -1,6 +1,5 @@
 langchain-text-splitters
 pypdf                    
-argparse                 
 chromadb                 
 rank-bm25                
 fastembed
@@ -11,3 +10,5 @@ huggingface-hub
 pyahocorasick
 python-multipart
 nltk
+fastapi
+uvicorn
