@@ -27,7 +27,6 @@ def search(user_query:str,top_k:int=config.TOP_K):
         rag_result = generate_rag(query,res)
 
         return rag_result
-        print(rag_result)
 
     except FileNotFoundError as e:
         print(f"File not found error:{e}") 
