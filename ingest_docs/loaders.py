@@ -18,7 +18,7 @@ def file_loader(file_info:list)->list:
             if text:    
                 page_content.append({"page_num":page_num,"text":text})
         
-        extracted_text = "\n".join(page_content)
+        extracted_text = "\n".join([page['text'] for page in page_content])
 
         parts = re.split(pattern,extracted_text, flags=re.MULTILINE)
 
