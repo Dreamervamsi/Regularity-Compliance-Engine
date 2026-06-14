@@ -6,7 +6,7 @@ from rag_pipeline.dual_search.sparse_search.src.sparse_index import Tokenize
 import config
 import io
 
-def ingest(file_stream:list[io.ByteIO],reingest:bool=True):
+def ingest(file_stream:list[io.ByteIO],regulation_name:str,reingest:bool=True):
     try:
         print("File loading.Extracting text..")
         # retriving text from document
