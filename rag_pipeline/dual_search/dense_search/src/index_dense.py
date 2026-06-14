@@ -47,13 +47,14 @@ def vector_store(chunks:list,embeddings:list,full_reingest:bool=False):
     return collection
 
 
-def dense_search(query_embedding, top_k) -> list:
+def dense_search(query_embedding, top_k,regulation_name:str) -> list:
 
     collection = get_collection(False)
     
     results = collection.query(
         query_embeddings=[query_embedding],
-        n_results=top_k
+        n_results=top_k,
+        where={"metadata":{"regulation_name":regulation_name}}
     )
 
     formatted_results = []

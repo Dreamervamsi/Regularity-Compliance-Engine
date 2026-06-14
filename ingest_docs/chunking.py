@@ -14,17 +14,18 @@ def chunk_text(parsed_sections:list) -> list:
         
         section_title = section['section_title']
         section_content = section['text']
-        source_path = section['source_path']
+        file_name = section['source_path']
 
         if len(section_content) <= config.CHUNK_SIZE:
             text_chunks.append({
                 "chunk_id":str(uuid.uuid4()),
                 "text":section_content,
                 "metadata":{
-                    "source":source_path,
+                    "source":file_name,
                     "doc_id":section['id'],
                     "section_title":section_title,
-                    "chunk_index":0
+                    "chunk_index":0,
+                    "regulation_name":file_name
                 }
             })
         else:
@@ -35,7 +36,7 @@ def chunk_text(parsed_sections:list) -> list:
                     "chunk_id": str(uuid.uuid4()),
                     "text": txt,
                     "metadata": {
-                        "source": source_path,
+                        "source": file_name,
                         "doc_id": section['id'],
                         "section_title":section_title,
                         "chunk_index": idx

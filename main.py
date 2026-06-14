@@ -19,9 +19,10 @@ def ingest(files:list[UploadFile] = File(...)):
                 "file_name":file.filename
             })
 
-        # ingesting document
+        # ingesting document 
         ingest(file_info)
         return "Ingestion successfully completed!"
+
     except Exception as e:
         print(f'Error :{e}')
         return "Failed to ingest documents!"

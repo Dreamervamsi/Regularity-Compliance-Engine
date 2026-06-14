@@ -9,7 +9,7 @@ def preprocess_query(query:str):
     obj = IntentCheck()
     res = obj.check_query_in_keyword_blocklist(normalised_query)
 
-    if(res.detected):
+    if(res['detected']):
         print(f'{res['message']}')
         return {
             'message':res['message'],
