@@ -18,7 +18,7 @@ llm = HuggingFaceEndpoint(
 
 chat_model = ChatHuggingFace(llm=llm)
 
-@lru_cache(maxsize=128) # lazy initialising or caching response if sae query passed
+@lru_cache(maxsize=128) # lazy initialising or caching response if same query passed
 def _generate_rag_results(query:str,top_results:str):
     context_block=[]
     for idx,result in enumerate(top_results,start=1):
@@ -52,15 +52,15 @@ def _generate_rag_results(query:str,top_results:str):
     citations = []
     for idx, result in enumerate(top_results, start=1):
         source_file = result['metadata']['source']
-        chunk_idx = result['metadata']['chunk_index']
+        chunk_index = result['metadata']['chunk_index']
         score = result.get('rrf_score', 0.0)
         
-        citations.append(f"[{idx}] Source: {source_file} (Chunk {chunk_idx}) | RRF Score: {score:.4f}")
+        citations.append(f"[{idx}] Source: {source_file} (Chunk {chunk_index}) | RRF Score: {score:.4f}")
 
     return response.content,citations
 
 def generate_rag(query:str,top_k_results:list):
     
-    serialise = json.dump(top_k_results,sort_keys=True,default=str)
+    serialise = json.dumps(top_k_results,sort_keys=True,default=str)
 
     return _generate_rag_results(query,serialise)

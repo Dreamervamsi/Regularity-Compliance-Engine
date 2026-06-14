@@ -10,13 +10,14 @@ app = FastAPI()
 def ingest(files:list[UploadFile] = File(...)):
     try :
         file_info=[]
-        for file in files:
+        for file_num,file in enumerate(files,start=1):
             binary_content = file.file.read()
-            io_bytes = io.ByteIO(binary_content)
+            io_bytes = io.BytesIO(binary_content)
 
             file_info.append({
                 "stream":io_bytes,
-                "file_name":file.filename
+                "file_name":file.filename,
+                "file_no":file_num
             })
 
         # ingesting document 
