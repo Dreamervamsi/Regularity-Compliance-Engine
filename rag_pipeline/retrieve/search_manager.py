@@ -9,7 +9,7 @@ from rag_pipeline.retrieve.metadata_filter import construct_metadata_filter,filt
 tokenizer = Tokenize()
 tokenizer.load_chunks(file_path=config.CHUNK_FILE)
 
-def search(user_query:str,top_k:int=config.TOP_K,regulation_name:str=None,section_name:str=None):
+def search(user_query:str,top_k:int=config.TOP_K,regulation_names:list=[],section_name:str=None):
     try:
         query = user_query
         
@@ -17,19 +17,21 @@ def search(user_query:str,top_k:int=config.TOP_K,regulation_name:str=None,sectio
 
         # construct metadata filter
         where_clause = construct_metadata_filter(
-            regulation=regulation_name,
+            regulations=regulation_names,
             section=section_name
         )
 
         if where_clause:
-            chunks = filter_chunks(chunks,regulation=regulation_name,section=section_name)
+            org_chunks = tokenizer.org_chunks
+            chunks = filter_chunks(org_chunks,regulation=regulation_names,section=section_name)
         # sparse search
         # higher top_k for sparse search to get more relevant results
-        sparse_results = tokenizer.sparse_search(query,top_k*4)
+        
+        sparse_results = tokenizer.sparse_search(chunks,query,top_k*4)
         
         # dense search
         # higher top_k for dense search to get more relevant results
-        dense_results = dense_search(query_embedding,top_k*4)
+        dense_results = dense_search(query_embedding,top_k*4,where_clause=where_clause)
         
         res = reciprocal_rank_fusion(sparse_results,dense_results,k=60,top_k=top_k)
 
