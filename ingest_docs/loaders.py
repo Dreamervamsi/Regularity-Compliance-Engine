@@ -4,8 +4,9 @@ from pypdf import PdfReader
 
 def file_loader(file_info:list)->list:
     results=[]
-    pattern = r'(?m)^((?:Section|Article|Part|Chapter)\s+[\dIVXLC]+(?:\.\d+)*[.:]?\s*.+)$'
-
+    # pattern = r'(?m)^((?:Section|Article|Part|Chapter)\s+[\dIVXLC]+(?:\.\d+)*[.:]?\s*.+)$'
+    pattern = r'^((?:Section|Article|Part|Chapter)\s+[\dIVXLC]+(?:\.\d+)*[.:]?\s*.+)$'
+    
     for file in file_info:   
         stream = file['stream']
         file_name = file['file_name']

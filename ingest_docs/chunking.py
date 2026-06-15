@@ -39,7 +39,8 @@ def chunk_text(parsed_sections:list) -> list:
                         "source": file_name,
                         "doc_id": section['id'],
                         "section_title":section_title,
-                        "chunk_index": idx
+                        "chunk_index": idx,
+                        "regulation_name":file_name
                     }
                 })
     return text_chunks

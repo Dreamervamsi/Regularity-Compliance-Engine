@@ -4,16 +4,25 @@ from rag_pipeline.dual_search.dense_search.src.index_dense import dense_search
 from ingest_docs.embedding import model
 from rag_pipeline.retrieve.rrf_ranking import reciprocal_rank_fusion
 from rag_pipeline.rag.llm import generate_rag
+from rag_pipeline.retrieve.metadata_filter import construct_metadata_filter,filter_chunks
 
 tokenizer = Tokenize()
 tokenizer.load_chunks(file_path=config.CHUNK_FILE)
 
-def search(user_query:str,top_k:int=config.TOP_K):
+def search(user_query:str,top_k:int=config.TOP_K,regulation_name:str=None,section_name:str=None):
     try:
         query = user_query
         
         query_embedding = next(model.embed([query]))
 
+        # construct metadata filter
+        where_clause = construct_metadata_filter(
+            regulation=regulation_name,
+            section=section_name
+        )
+
+        if where_clause:
+            chunks = filter_chunks(chunks,regulation=regulation_name,section=section_name)
         # sparse search
         # higher top_k for sparse search to get more relevant results
         sparse_results = tokenizer.sparse_search(query,top_k*4)

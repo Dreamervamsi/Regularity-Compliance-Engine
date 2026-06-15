@@ -25,7 +25,7 @@ class Tokenize:
         self.tokenize_corpus = BM25Okapi(self.corpus)
 
     def sparse_search(self,query:str,top_k:int=3):
-    
+        
         tokenized_query = query.lower().split()
 
         scores = self.tokenize_corpus.get_scores(tokenized_query)
