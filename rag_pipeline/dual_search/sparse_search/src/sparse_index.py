@@ -24,20 +24,24 @@ class Tokenize:
     
         self.tokenize_corpus = BM25Okapi(self.corpus)
 
-    def sparse_search(self,query:str,top_k:int=3):
+    def sparse_search(self,chunks:list,query:str,top_k:int=3):
         
         tokenized_query = query.lower().split()
 
-        scores = self.tokenize_corpus.get_scores(tokenized_query)
+        temp_corpus = [chunk['text'].lower().split() for chunk in chunks]
+        temp_bm25 = BM25Okapi(temp_corpus)
         
+        scores = temp_bm25.get_scores(tokenized_query)
+
         scored_chunks = []
-        for idx, chunk in enumerate(self.org_chunks):
+
+        for idx, chunk in enumerate(chunks):
             scored_chunks.append({
                 "chunk_id": chunk.get("chunk_id"),
                 "text": chunk.get("text"),
                 "metadata": chunk.get("metadata"),
                 "sparse_score": float(scores[idx]) # Keep the raw score
-            }) 
+            })
 
         scored_chunks.sort(key=lambda x:x['sparse_score'],reverse=True)
         
