@@ -7,3 +7,12 @@ INDEX_DIR='./vector_store'
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"
 CHROMADB_COLLECTION="Hybrid_RAG_collection"
 SAFETY_BLOCKLIST_COLLECTION="safety_blocklist_collection"
+
+REDIS_HOST="localhost"
+REDIS_PORT=6379
+REDIS_DB=0
+REDIS_INDEX="idx:semantic_cache"
+REDIS_PREFIX="semantic_cache:"
+
+SEMANTIC_CACHE_DIM=768
+SEMANTIC_CACHE_TOP_K=1

@@ -1,9 +1,10 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Depends
 import uvicorn
 from ingest_docs.ingest_manager import ingest
 from rag_pipeline.query_preprocess.preprocess import preprocess_query
 import io
 from rag_pipeline.retrieve.search_manager import search
+from redis.asyncio import Redis
 
 app = FastAPI()
 
@@ -30,14 +31,14 @@ def ingest(files:list[UploadFile] = File(...)):
         return "Failed to ingest documents!"
 
 @app.post('/query')
-def query(query:str,regulations:list=[],section:str=None):
+def query(query:str,regulations:list=[],section:str=None,redis:Redis=Depends(get_redis)):
     if not regulations:
         return "Please provide at least one regulation to search!"
     
     # query preprocessing
     clean_query = preprocess_query(query)
 
-    search(clean_query,top_k=config.TOP_K,regulation_name=regulations,section_name=section)
+    search(clean_query,top_k=config.TOP_K,regulation_name=regulations,section_name=section,redis=redis)
 
 
 if __name__ == "__main__":

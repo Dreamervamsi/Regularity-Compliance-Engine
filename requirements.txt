@@ -12,3 +12,4 @@ python-multipart
 nltk
 fastapi
 uvicorn
+redis

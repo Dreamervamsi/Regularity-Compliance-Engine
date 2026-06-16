@@ -1,3 +1,4 @@
 .venv
 .env
-./compliance_rag_workflow_d561508d.plan.md
+compliance_rag_workflow_d561508d.plan.md
+implementation_plan.md
