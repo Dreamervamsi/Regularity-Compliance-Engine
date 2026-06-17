@@ -5,8 +5,12 @@ from ingest_docs.embedding import dense_embed
 from rag_pipeline.dual_search.sparse_search.src.sparse_index import Tokenize
 import config
 import io
+from redis.asyncio import Redis
+from rag_pipeline.cache.semantic_cache import redis_pool
 
-def ingest(file_stream:list[io.ByteIO],regulation_name:str,reingest:bool=True):
+redis = Redis(connection_pool = redis_pool)
+
+async def ingest(file_stream:list[io.ByteIO],regulation_name:str,reingest:bool=True):
     try:
         print("File loading.Extracting text..")
         # retriving text from document
@@ -31,6 +35,18 @@ def ingest(file_stream:list[io.ByteIO],regulation_name:str,reingest:bool=True):
 
         print("Saving chunks..")
         tokenize.save_chunks(data_chunks,config.CHUNK_FILE,full_reingest=reingest)
+
+        if reingest:
+            keys_to_delete=[]
+            async for match in redis.scan_iter(match=f"{config.REDIS_PREFIX}*",count=1000):
+                keys_to_delete.append(match)
+
+                if len(keys_to_delete) >=100:
+                    await redis.unlink(*keys_to_delete)
+                    keys_to_delete=[]
+
+            if keys_to_delete:
+                await redis.unlink(*keys_to_delete)
 
         print("Ingestion successful!, Full reingestion applied: ",reingest)
 

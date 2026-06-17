@@ -12,7 +12,7 @@ from fastapi import Depends
 tokenizer = Tokenize()
 tokenizer.load_chunks(file_path=config.CHUNK_FILE)
 
-async def search(user_query:str,top_k:int=config.TOP_K,regulation_names:list=[],section_name:str=None,redis:Redis):
+async def search(user_query:str,top_k:int,regulation_names:list,section_name:str,redis:Redis):
     try:
         query = user_query
         

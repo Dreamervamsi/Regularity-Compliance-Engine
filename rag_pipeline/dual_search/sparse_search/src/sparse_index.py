@@ -40,7 +40,7 @@ class Tokenize:
                 "chunk_id": chunk.get("chunk_id"),
                 "text": chunk.get("text"),
                 "metadata": chunk.get("metadata"),
-                "sparse_score": float(scores[idx]) # Keep the raw score
+                "sparse_score": float(scores[idx])
             })
 
         scored_chunks.sort(key=lambda x:x['sparse_score'],reverse=True)

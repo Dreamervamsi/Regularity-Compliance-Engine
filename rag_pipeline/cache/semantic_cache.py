@@ -86,7 +86,7 @@ async def store_semantic_query(query:str,query_embedding, response: str, redis: 
         query_embedding_bytes = np.array(query_embedding, dtype=np.float32).tobytes()
 
         await redis.hset(key,"embedding",query_embedding_bytes)
-        await redis.expire(key,time=60*60*24)
+        await redis.expire(key,time=config.CACHE_TTL_SECONDS)
         return "Query stored successfully!"
     except Exception as e:
         print(e)
