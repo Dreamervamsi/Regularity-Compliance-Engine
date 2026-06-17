@@ -5,6 +5,7 @@ TOP_K=3
 BATCH_SIZE=32
 INDEX_DIR='./vector_store'
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"
+RERANKER_MODEL = "BAAI/bge-reranker-large"
 CHROMADB_COLLECTION="Hybrid_RAG_collection"
 SAFETY_BLOCKLIST_COLLECTION="safety_blocklist_collection"
 
