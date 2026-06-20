@@ -54,7 +54,6 @@ class IntentCheck:
                 'word':term,
                 'category':category
             }
-
         return {
                 'detected':False,
                 'message':"No issue found",
